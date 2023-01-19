@@ -288,12 +288,12 @@ const Wizard = () => {
                         />
                       </div>
                     )}
-                    <ControlButton
+                    {/* <ControlButton
                       text="prev"
                       icon={<NavigateNextIcon sx={{ fontSize: "45px" }} />}
                       isActive={false}
                       onNext={handleBack}
-                    />
+                    /> */}
                   </div>
                 </div>
               </Box>
