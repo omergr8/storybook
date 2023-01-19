@@ -1,9 +1,11 @@
 import classes from "./Wizard.module.css";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Toast from "../Common/Toast/Toast";
 import { sampleData } from "../Constants/sets";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import CloseIcon from '@mui/icons-material/Close';
 import CreateStory from "./Sections/CreateStory/CreateStory";
 import EnglishLevel from "./Sections/EnglishLevel/EnglishLevel";
 import StoryWords from "./Sections/StoryWords/StoryWords";
@@ -15,16 +17,20 @@ import Congrats from "./Sections/Congrats/Congrats";
 import RecordButton from "../Common/RecordButton/RecordButton";
 import ControlButton from "../Common/ControlButton/ControlButton";
 import LoaderBackdrop from "../Common/Backdrop/LoaderBackdrop";
-import { getStory , saveImages,textToSpeechEn,addStory} from "../../utility/request";
+import ExitDialog from "../Common/ExitDialog/ExitDialog";
+import {
+  getStory,
+  saveImages,
+  textToSpeechEn,
+  addStory,
+} from "../../utility/request";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-
-const storyPromptCreator = (textValue,englishGrade,storyWords) =>{
-    return `Tell me a story in ${storyWords} or less that is interesting and creative. Story should use ${englishGrade} language. The story begins like this, “${textValue}” At the end of the story add three lines space and use the tag "Title:" and then give me 3 sample titles in numbered list for this story.`
-
-}
+const storyPromptCreator = (textValue, englishGrade, storyWords) => {
+  return `Tell me a story in ${storyWords} or less that is interesting and creative. Story should use ${englishGrade} language. The story begins like this, “${textValue}” At the end of the story add three lines space and use the tag "Title:" and then give me 3 sample titles in numbered list for this story.`;
+};
 
 const Wizard = () => {
   const {
@@ -33,11 +39,12 @@ const Wizard = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-
+  const navigate = useNavigate();
   const [isMissing, setIsMissing] = useState({
     condition: false,
     error: "",
   });
+  const [dialogStatus, setDialogStatus] = React.useState(false);
   const [recordingStatus, setRecordingStatus] = useState(false);
   const [textValue, setTextValue] = useState("");
   const [activeStep, setActiveStep] = useState(0);
@@ -54,15 +61,19 @@ const Wizard = () => {
   const [images, setImages] = React.useState([]);
   const [backgroundImage, setBackgroundImage] = useState("");
   const [isActive, setIsActive] = useState(true);
-  const [loading, setLoading] = React.useState({status:false,message:""});
-  const [errorData,setErrorData] = useState({status:false,message:"",severity:"error"})
+  const [loading, setLoading] = React.useState({ status: false, message: "" });
+  const [errorData, setErrorData] = useState({
+    status: false,
+    message: "",
+    severity: "error",
+  });
 
-//   useEffect(() => {
-//     const sentence = sentenceArray.join(" ");
-//     // console.log("join text a",sentence)
-//     setTextValue(sentence);
-//     console.log("tv is", sentence);
-//   }, [sentenceArray]);
+  //   useEffect(() => {
+  //     const sentence = sentenceArray.join(" ");
+  //     // console.log("join text a",sentence)
+  //     setTextValue(sentence);
+  //     console.log("tv is", sentence);
+  //   }, [sentenceArray]);
 
   useEffect(() => {
     if (activeStep === 0) {
@@ -106,20 +117,16 @@ const Wizard = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else if (activeStep === 5 && !isActive) {
       // logic for not Happy
-      if(notHappy === "Start over with new prompt"){
-        setActiveStep(0)
-      }else{
-        getOpenAiStory(4)
+      if (notHappy === "Start over with new prompt") {
+        setActiveStep(0);
+      } else {
+        getOpenAiStory(4);
       }
-
-    }else if(!isActive && activeStep ===3)
-    {
-        getOpenAiStory(4)
-       
-    }else if(!isActive && activeStep === 6){
-        handleSave()
-    }
-     else if (!isActive) {
+    } else if (!isActive && activeStep === 3) {
+      getOpenAiStory(4);
+    } else if (!isActive && activeStep === 6) {
+      handleSave();
+    } else if (!isActive) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
@@ -132,10 +139,7 @@ const Wizard = () => {
     {
       label: "Record 1",
       description: (
-        <CreateStory
-          textValue={textValue}
-          setTextValue={setTextValue}
-        />
+        <CreateStory textValue={textValue} setTextValue={setTextValue} />
       ),
     },
     {
@@ -201,19 +205,29 @@ const Wizard = () => {
     },
     {
       label: "Record 8",
-      description: <Congrats selectedTitle={selectedTitle}/>,
+      description: <Congrats selectedTitle={selectedTitle} />,
     },
   ];
-  useEffect(()=>{
-    console.log('rec arr is',recordingArray)
-  },[recordingArray])
+  useEffect(() => {
+    console.log("rec arr is", recordingArray);
+  }, [recordingArray]);
   const handleSave = async () => {
-    setLoading(prevState => {
-        return {...prevState, status:true,message:"Please wait, converting text to audio"};
-      });
-    const data = await textToSpeechEn(sentenceList,setRecordingArray,setLoading,setErrorData,setActiveStep)
-    console.log("i am saving",storyTitles,recordingArray,'lk',data)
-    addStory(data,selectedTitle,setActiveStep,setLoading,setErrorData)
+    setLoading((prevState) => {
+      return {
+        ...prevState,
+        status: true,
+        message: "Please wait, converting text to audio",
+      };
+    });
+    const data = await textToSpeechEn(
+      sentenceList,
+      setRecordingArray,
+      setLoading,
+      setErrorData,
+      setActiveStep
+    );
+    console.log("i am saving", storyTitles, recordingArray, "lk", data);
+    addStory(data, selectedTitle, setActiveStep, setLoading, setErrorData);
 
     // storySet.forEach((el,i)=>{
     //     if(el.backgroundImage !== ""){
@@ -221,17 +235,29 @@ const Wizard = () => {
     //     }
     // })
   };
-  const getOpenAiStory = (step) =>{
-    setLoading(prevState => {
-        return {...prevState, status:true,message:"Please wait, our AI engine is working on it..."};
-      });
-    const prompt = storyPromptCreator(textValue,englishGrade,storyWords)
-    getStory(prompt,setSentenceList,setStoryTitles, setActiveStep,setLoading,setErrorData,step)
-    console.log("story data is",textValue,englishGrade,storyWords,prompt)
-  }
+  const getOpenAiStory = (step) => {
+    setLoading((prevState) => {
+      return {
+        ...prevState,
+        status: true,
+        message: "Please wait, our AI engine is working on it...",
+      };
+    });
+    const prompt = storyPromptCreator(textValue, englishGrade, storyWords);
+    getStory(
+      prompt,
+      setSentenceList,
+      setStoryTitles,
+      setActiveStep,
+      setLoading,
+      setErrorData,
+      step
+    );
+    console.log("story data is", textValue, englishGrade, storyWords, prompt);
+  };
   const appendSentence = (val) => {
     setSentenceArray((prevVals) => [...prevVals, val]);
-    const sentence = [...sentenceArray,val].join(" ");
+    const sentence = [...sentenceArray, val].join(" ");
     // console.log("join text a",sentence)
     setTextValue(sentence);
   };
@@ -248,13 +274,27 @@ const Wizard = () => {
       appendSentence(transToUppercase(transcript) + ".");
     }
   };
-
+  const onExit = () => {
+    navigate(`/`);
+  };
   return (
     <>
-    <Toast errorData={errorData} setErrorData={setErrorData} />
-    <LoaderBackdrop data={loading} />
+      <ExitDialog
+        dialogStatus={dialogStatus}
+        setDialogStatus={setDialogStatus}
+        onExit={onExit}
+        message="Are you sure you want to exit this story?"
+      />
+      <Toast errorData={errorData} setErrorData={setErrorData} />
+      <LoaderBackdrop data={loading} />
       {steps[activeStep] && (
         <>
+          <div
+            className={classes.exitDiv}
+            onClick={() => setDialogStatus(true)}
+          >
+            <CloseIcon />
+          </div>
           <div className={classes.main}>
             <Box sx={{ flexGrow: 1 }}>
               <Box
@@ -282,7 +322,7 @@ const Wizard = () => {
                       <div className={classes.nextButton}>
                         <ControlButton
                           text="tap to continue"
-                          icon={<NavigateNextIcon  />}
+                          icon={<NavigateNextIcon />}
                           isActive={isActive}
                           onNext={handleNext}
                         />

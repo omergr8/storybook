@@ -1,0 +1,63 @@
+.buttonFlex{
+display: flex;
+justify-content: space-between;
+}
+.text{
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 28px;
+line-height: 38px;
+color: #000000;
+padding-bottom: 100px;
+margin-top: 20px;
+}
+.dontExit{
+   
+    
+}
+.dontExitButton{
+    width: 168.59px;
+    height: 57.65px;
+    background: #AB1414;
+    border-radius: 20px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 36px;
+    color: #FFFFFF;
+    border: unset;
+    cursor: pointer;
+}
+.exit{
+
+}
+.exitButton{
+    width: 157.64px;
+    height: 57.65px;
+    background: #237515;
+    border-radius: 20px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 36px;
+    color: #FFFFFF;
+    border: unset;
+    cursor: pointer;
+}
+.main{
+display: flex;   
+}
+.exitButton:hover {
+    background: #237515d5;
+}
+.dontExitButton:hover {
+    background: #ab1414d3;
+}
+.exitButton:active,.dontExitButton:active{
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}

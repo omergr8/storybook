@@ -4,14 +4,14 @@
 .exitDiv{
     position: absolute;
     color: white;
-    right: 260px;
+    right: 18%;
     cursor: pointer;
     transition: 0.2s all;
 }
 .autoplay {
   position: absolute;
   top: 0;
-  left: 160px;
+  left: 14%;
 
 }
 .autoplay p{
@@ -33,10 +33,11 @@ margin-top: 10px;
   cursor: pointer;
   transition: 0.2s all;
   color: white;
-}.replay{
+}
+.replay{
     position: absolute;
     top: 130px;
-    left: 160px;
+    left: 14%;
 }
 .replayButton{
   width: 50px;
@@ -70,4 +71,16 @@ margin-top: 10px;
   }
   .exitDiv:hover{
     color: #ffffffa9;
+  }
+
+  @media only screen and (max-width: 650px) {
+    .exitDiv{
+      right: 13%;
+  }
+    .autoplay {
+      left: 10%;
+    }
+    .replay{
+      left: 10%;
+  }
   }

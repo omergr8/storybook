@@ -1,6 +1,6 @@
 import classes from "./Read.module.css";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,9 +13,11 @@ import { sampleObj } from "../Constants/sets";
 import { getSpeechMarkAtTime } from "../../utility/functions";
 import { getSpecificStory } from "../../utility/request";
 import LoaderBackdrop from "../Common/Backdrop/LoaderBackdrop";
-
+import ExitDialog from "../Common/ExitDialog/ExitDialog";
 const Read = ({}) => {
     const params = useParams();
+    const navigate = useNavigate();
+  const [dialogStatus, setDialogStatus] = React.useState(false);
   const [page, setPage] = useState(0);
   const [storyData,setStoryData] = useState(null)
   const [isAutoPlay,setIsAutoPlay] = useState(true)
@@ -157,11 +159,16 @@ const Read = ({}) => {
 
     setIsAutoPlay(prevCheck => !prevCheck)
  }
+
+ const onExit =()=>{
+  navigate(`/`);
+ }
   return (
     <>
+    <ExitDialog dialogStatus={dialogStatus} setDialogStatus={setDialogStatus} onExit={onExit} message="Are you sure you want to exit this story?" />
      <LoaderBackdrop data={loading} />
     {storyData  ? <div className={classes.main}>
-        <div className={classes.exitDiv}>
+        <div className={classes.exitDiv} onClick={()=>setDialogStatus(true)}>
             <CloseIcon />
         </div>
         <div className="container-85">
