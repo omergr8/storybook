@@ -54,8 +54,8 @@ const Read = ({}) => {
     let interval;
     if (running) {
       interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 99);
-      }, 100);
+        setSeconds((seconds) => seconds + 99.5);
+      }, 99);
     } else if (!running) {
       clearInterval(interval);
     }
