@@ -1,0 +1,73 @@
+.main{
+    display: flex;
+    justify-content: space-between;
+    /* width: 25%; */
+    align-items: center;
+    flex-wrap: wrap;
+}
+.rb {
+    border: 1px solid #FFFFFF;
+    color: white;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    padding: 5px;
+    font-size: 31px;
+    height: 93px;
+    width: 93px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+  }
+  .rb:active {
+
+    transform: translateY(2px);
+  }
+  .rbMic {
+    border: 1px solid transparent;
+    color: white;
+    background: #1A4ED6;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    padding: 5px;
+    font-size: 31px;
+    height: 93px;
+    width: 93px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+  }
+  .rbMic:active {
+    background: #B40F0F;
+  }
+  .recordText{
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 33px;
+margin-left: 26px;
+color: #FFFFFF;
+  }
+  @media only screen and (max-width: 870px) {
+    .recordText{
+  width: 100%;
+  margin-left: 0;
+    }
+      }
+  @media only screen and (max-width: 670px) {
+    .recordText{
+        font-size: 14px;
+        line-height: 24px;
+    }
+    .rbMic{
+        padding: 5px;
+        font-size: 31px;
+        height: 73px;
+        width: 73px;
+    }
+      }

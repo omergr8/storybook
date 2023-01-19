@@ -1,0 +1,58 @@
+.main{
+position: relative;
+margin-bottom: 100px;
+}
+.pageNumber{
+    position: absolute;
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 30px;
+color: #FFFFFF;
+left: -150px;
+top: 14px;
+}
+.tabFlex{
+display: flex;
+margin-bottom: 30px;
+
+font-family: 'Avenir';
+font-style: normal;
+font-weight: 900;
+font-size: 20px;
+line-height: 30px;
+color: #FFFFFF;
+/* justify-content: center; */
+}
+.tab1{
+    width: 269px;
+    height: 50px;
+    background: #65686D;
+    border-radius: 20px 0px 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tab2{
+    width: 269px;
+    height: 50px;
+    background: #65686D;
+    border-radius: 0px 20px 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tabActivated{
+    background: #1A4ED6;
+}
+.pages{
+position: relative;
+}
+
+.pageContent{
+    
+}
+.imageTabContent{
+    
+}

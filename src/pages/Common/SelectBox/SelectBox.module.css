@@ -1,0 +1,52 @@
+.main {
+}
+.box {
+  width: 70%;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: #65686d;
+  border-radius: 20px;
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 10px 0 10px 0;
+
+  color: #ffffff;
+}
+.selected {
+  background: #1a4ed6;
+}
+.box:hover {
+  box-shadow: 0 8px 16px 0 rgba(25, 78, 214, 0.2);
+}
+.inputText {
+}
+.inputText input {
+  width: 63%;
+  min-height: 35px;
+  border-color: transparent;
+  background: #65686d;
+  border-radius: 20px;
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 10px 0 10px 20px;
+  color: #ffffff;
+}
+.selectedInput {
+  background: #1a4ed6 !important;
+}
+@media only screen and (max-width: 900px) {
+  .box {
+    width: 100%;
+  }
+  .inputText input {
+    width: 93%;
+  }
+}

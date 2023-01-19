@@ -1,0 +1,53 @@
+.main{
+
+}
+.recordArea{
+position: relative;
+}
+.textAreaAbs{
+    position: absolute;
+    left: -180px;
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+text-align: right;
+
+color: #FFFFFF;
+width: 155px;
+}
+.textArea{
+    background: transparent;
+    resize: none;
+    border: 0 none;
+    width: 100%;
+    outline: none;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 38px;
+    color: #FFFFFF;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    overflow:hidden;
+    min-height:423px;
+}
+textArea[readonly]
+{
+    cursor:default
+}
+
+@media only screen and (max-width: 1050px) {
+    .textAreaAbs {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        top: -50px;
+        text-align: center;
+    }
+  }

@@ -1,0 +1,18 @@
+.main{}
+.title{
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 28px;
+line-height: 40px;
+
+color: #FFFFFF;
+
+}
+.box{
+    margin-top: 60px;
+    margin-bottom: 80px;
+}
+.boxDiv{
+    margin-bottom: 20px;
+}

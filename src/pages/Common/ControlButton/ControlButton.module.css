@@ -1,0 +1,63 @@
+.main{
+    display: flex;
+    justify-content: space-between;
+    /* width: 25%; */
+    position: relative;
+    align-items: center;
+}
+.controlButton{
+    border: 1px solid transparent;
+    color: white;
+    background: #1A4ED6;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    padding: 5px;
+    font-size: 31px;
+    height: 93px;
+    width: 93px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+}
+.buttonLabel{
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 33px;
+/* text-align: right; */
+margin-left: 26px;
+color: #FFFFFF;
+position: absolute;
+right: -200px;
+
+}
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+@media only screen and (max-width: 870px) {
+.buttonLabel{
+    bottom: -70px;
+    right: 0;
+    text-align: center;
+}
+  }
+  @media only screen and (max-width: 670px) {
+    .buttonLabel{
+        font-size: 14px;
+        line-height: 24px;
+        margin-left: 0px;
+        bottom: -60px;
+    }
+    .controlButton{
+        padding: 5px;
+        font-size: 31px;
+        height: 73px;
+        width: 73px;
+    }
+      }

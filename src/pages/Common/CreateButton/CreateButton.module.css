@@ -1,0 +1,33 @@
+.main {
+}
+.box {
+  width: 100%;
+  height: 80px;
+  background: #b93636;
+  border-radius: 20px;
+display: flex;
+align-items: center;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon {
+  color: white;
+}
+.text {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 30px;
+  width: 458.94px;
+  color: #ffffff;
+}
+.box:active {
+    background: rgba(185, 54, 54, 0.5);
+    transform: translateY(2px);
+  }

@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'animate.css';
+// import './fonts/Avenir/AvenirBlack.otf';
+// import './fonts/Avenir/AvenirBook.otf';
+// import './fonts/Avenir/AvenirRoman.otf';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

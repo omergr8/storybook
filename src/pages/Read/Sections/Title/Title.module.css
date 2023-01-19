@@ -1,0 +1,27 @@
+.main {
+}
+.title {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 50px;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 50px;
+}
+.back {
+  border-radius: 20px;
+  width: 100%;
+  padding: 20px 0 20px 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 498px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image {
+}
+.image img {
+}

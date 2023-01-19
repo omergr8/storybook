@@ -1,0 +1,23 @@
+.main{}
+.title{
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 28px;
+line-height: 40px;
+color: #FFFFFF;
+
+}
+.box{
+    margin-top: 80px;
+}
+.boxDiv{
+    margin-bottom: 20px;
+}
+.animation :global{
+    margin-bottom: 20px;
+    animation-name: pulse ;
+    animation-iteration-count: infinite;
+    animation-duration: 1.2s;
+}
+

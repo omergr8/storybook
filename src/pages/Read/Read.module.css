@@ -1,0 +1,73 @@
+.main {
+    position: relative;
+}
+.exitDiv{
+    position: absolute;
+    color: white;
+    right: 260px;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+.autoplay {
+  position: absolute;
+  top: 0;
+  left: 160px;
+
+}
+.autoplay p{
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 16px;
+color: #FFFFFF;
+margin-top: 10px;
+
+}
+.autoPlayButton {
+  width: 50px;
+  height: 50px;
+  background: #1a4ed6;
+  border-radius: 100px;
+  border: unset;
+  cursor: pointer;
+  transition: 0.2s all;
+  color: white;
+}.replay{
+    position: absolute;
+    top: 130px;
+    left: 160px;
+}
+.replayButton{
+  width: 50px;
+  height: 50px;
+  background: #1a4ed6;
+  border-radius: 100px;
+  border: unset;
+  cursor: pointer;
+  transition: 0.2s all;
+  color: white;
+}
+.contentFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.leftControl {
+}
+.leftControlEmpty{
+    width: 93px;
+}
+.content {
+    flex-basis: 60%;
+}
+
+.autoPlayButton:active , .replayButton:active, .exitDiv:active {
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
+  }
+  .exitDiv:hover{
+    color: #ffffffa9;
+  }

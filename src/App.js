@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import AWS from "aws-sdk";
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { sampleData } from "./pages/Constants/sets";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import CreateButton from "./pages/Common/CreateButton/CreateButton";
+import ShowcaseCard from "./pages/Common/ShowcaseCard/ShowcaseCard";
+import RecordButton from "./pages/Common/RecordButton/RecordButton";
+import ControlButton from "./pages/Common/ControlButton/ControlButton";
+import Wizard from "./pages/Wizard/Wizard";
+import Home from "./pages/Home/Home";
+import Read from "./pages/Read/Read";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/start",
+    element: <Wizard />,
+  },
+  {
+    path: "/read/:id",
+    element: <Read />,
+  },
+]);
+
+AWS.config.update({
+  accessKeyId: process.env.REACT_APP_ACCESS_Key,
+  secretAccessKey: process.env.REACT_APP_SECRET_Key,
+  region: "us-east-1",
+});
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <RouterProvider router={router} />
     </div>
   );
 }

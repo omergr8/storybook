@@ -1,0 +1,60 @@
+.main{
+
+}
+.textFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.text{
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 60px;
+    color: #FFFFFF;   
+    border-radius: 20px;
+    width: 85%;
+    padding: 20px 0 20px 0;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    min-height: 520px;
+    text-align: center;
+    display: flex;
+    align-self: center;
+}
+.text div{
+    display: flex;
+    align-self: center;
+}
+.backgroundSelector{
+
+}
+.backBox{
+    width: 70px;
+    height: 70px;
+    left: 1099px;
+    top: 521px;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    background-size: contain;
+}
+.activatedBox{
+    border: 5px solid #F7C23B;
+}
+.backBox img{
+
+}
+@media only screen and (max-width: 1200px) {
+    .text{
+        width: 100%;
+    }
+    .backgroundSelector{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+      }
