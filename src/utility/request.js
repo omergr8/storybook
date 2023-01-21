@@ -260,6 +260,7 @@ export const getStoriesList = async () => {
   const { data, error } = await supabase
   .from('stories')
   .select()
+  .order('id', { ascending: false })
   return { data: data, error:error}
 }
 export const getSpecificStory = async (id) => {

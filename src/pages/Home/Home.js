@@ -7,18 +7,6 @@ import apple from "../../assets/images/appStore.svg";
 import { getStoriesList } from "../../utility/request";
 const si =
   "https://s3-alpha-sig.figma.com/img/4003/dce8/c3235cb2db6897bef0c1bac1c0193088?Expires=1673827200&Signature=Ah34yZrEemYdnVpl00mJMRyhfV-PeLDd~NXumy5TpbOH5RZuul2JAJE93FaTsgyyvey0CC6fLihhr8ftbWp2eXfBGX8RhusBhC4DwUO3jGb3EKuxnWV4kMjnmaBNjugTFpey6mZgmFdLdhyIseW7cvEIlM3O9cil5Mr0BXJLAqVOLkSItsGt5tlXrALhOo~7rU83m~SZUaMa0nhD~fNI7QgLxGcpP2DHXdagfduRTOnhFzc~kzoccBF0FSI3YtVhGy2gOjvYZLnfzY0OVpMuUmIUfSm2BKl46spMHyDI-b5FoKMSC29Qz4eau4qYcXDyORYG-MaGyHoTxjF~YYJGpQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4";
-const randomData = [
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-  { img: si, text: "George Went to the Doctor Today", rating: 15, stars: 4.7 },
-];
-
 const Home = ({ direction, icon, text, isActive }) => {
   const [search, setSearch] = useState("");
   const [storiesList,setStoriesList] = useState([])

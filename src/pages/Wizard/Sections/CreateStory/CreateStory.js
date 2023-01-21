@@ -1,18 +1,22 @@
 import classes from "./CreateStory.module.css";
 import OutsideClickHandler from "react-outside-click-handler";
 import React, { useState, useEffect } from "react";
+const transToUppercase = (t) => {
+  return t.charAt(0).toUpperCase() + t.slice(1);
+};
 
-
-const CreateStory = ({ textValue, setTextValue }) => {
+const CreateStory = ({ appendSentence,textValue, setTextValue }) => {
   const [textAreaStatus, setTextAreaStatus] = useState(false);
   const onHandleText = (e) => {
     const val = e.target.value;
-    setTextValue(val);
+    //setTextValue(val);
+    appendSentence(transToUppercase(val),'type');
   };
 
   const handleOutsideClick = () => {
     // textValue !== "" && appendSentence(textValue);
   };
+
   return (
     <>
       <div className={classes.main}>
@@ -23,6 +27,7 @@ const CreateStory = ({ textValue, setTextValue }) => {
             <p>starting typing here</p>
           </div>
         )}
+        {/* {recordingStatus && <p>{transcript}</p>} */}
           <OutsideClickHandler onOutsideClick={handleOutsideClick}>
             <textarea
               className={classes.textArea}

@@ -135,11 +135,51 @@ const Wizard = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const appendSentence = (val,cond) => {
+    if(cond === true){
+      const sentence = [...sentenceArray, val].join(" ");
+      //console.log("test join",val,'lk',sentence,'wow',sentence+val)
+      setTextValue(sentence);
+    }else if(cond === 'type'){
+      setSentenceArray([val]);
+      setTextValue(val);
+    }
+    else if(cond === false){
+      setSentenceArray((prevVals) => [...prevVals, val]);
+      const sentence = [...sentenceArray, val].join(" ");
+      setTextValue(sentence);
+    }
+
+  };
+
+  const onStart = () => {
+    setRecordingStatus(true);
+    SpeechRecognition.startListening({continuous:true});
+  };
+
+  const onEnd = () => {
+    resetTranscript()
+    setRecordingStatus(false);
+    SpeechRecognition.stopListening()
+    if (transcript !== "") {
+      appendSentence(transToUppercase(transcript) + ".",false);
+    }
+  };
+  useEffect(()=>{
+    if(recordingStatus && transcript && transcript !== ""){
+      appendSentence(transToUppercase(transcript) ,true);
+    }else if(!recordingStatus){
+      resetTranscript()
+      SpeechRecognition.startListening();
+      SpeechRecognition.stopListening();
+    }
+  },[transcript])
+
   const steps = [
     {
       label: "Record 1",
       description: (
-        <CreateStory textValue={textValue} setTextValue={setTextValue} />
+        <CreateStory appendSentence={appendSentence} textValue={textValue} setTextValue={setTextValue} />
       ),
     },
     {
@@ -208,9 +248,6 @@ const Wizard = () => {
       description: <Congrats selectedTitle={selectedTitle} />,
     },
   ];
-  useEffect(() => {
-    console.log("rec arr is", recordingArray);
-  }, [recordingArray]);
   const handleSave = async () => {
     setLoading((prevState) => {
       return {
@@ -255,25 +292,7 @@ const Wizard = () => {
     );
     console.log("story data is", textValue, englishGrade, storyWords, prompt);
   };
-  const appendSentence = (val) => {
-    setSentenceArray((prevVals) => [...prevVals, val]);
-    const sentence = [...sentenceArray, val].join(" ");
-    // console.log("join text a",sentence)
-    setTextValue(sentence);
-  };
 
-  const onStart = () => {
-    setRecordingStatus(true);
-    SpeechRecognition.startListening();
-  };
-
-  const onEnd = () => {
-    setRecordingStatus(false);
-    SpeechRecognition.stopListening();
-    if (transcript !== "") {
-      appendSentence(transToUppercase(transcript) + ".");
-    }
-  };
   const onExit = () => {
     navigate(`/`);
   };
@@ -283,7 +302,7 @@ const Wizard = () => {
         dialogStatus={dialogStatus}
         setDialogStatus={setDialogStatus}
         onExit={onExit}
-        message="Are you sure you want to exit this story?"
+        message="Are you sure you want to exit this story?  Changes will not be saved."
       />
       <Toast errorData={errorData} setErrorData={setErrorData} />
       <LoaderBackdrop data={loading} />

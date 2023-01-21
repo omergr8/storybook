@@ -1,8 +1,9 @@
 import classes from "./RecordButton.module.css";
 import React, { useState, useEffect } from "react";
 import MicNoneIcon from "@mui/icons-material/MicNone";
+import clsx from "clsx";
 
-function useOutsideAlerter(ref, onEnd) {
+function useOutsideAlerter(ref, setIsOn) {
   React.useEffect(() => {
     /**
      * Alert if clicked on outside of element
@@ -10,7 +11,7 @@ function useOutsideAlerter(ref, onEnd) {
     function handleClickOutside(event) {
       // console.log("ref is",ref.current,event,event.target,!ref.current.contains(event.target),ref.current === event.target)
       if (ref.current && !ref.current.contains(event.target)) {
-        onEnd()
+        setIsOn(false);
       }
     }
     // Bind the event listener
@@ -25,33 +26,35 @@ function useOutsideAlerter(ref, onEnd) {
 }
 
 const RecordButton = ({ recordingStatus,onStart,onEnd }) => {
+  let [isOn, setIsOn] = useState(false);
   const wrapperRef = React.useRef(null);
-  useOutsideAlerter(wrapperRef,onEnd);
+  useOutsideAlerter(wrapperRef,setIsOn);
 
-  const onLongPressStart = (e) => {
-    if((e.button === 0 && onEnd)||(e.type === "touchend" && onStart)){
+
+  const handleChange = () => {
+     setIsOn(!isOn);
+  };
+
+  useEffect(()=>{
+    if(isOn){
       onStart()
-     }
-  };
-  //useOutsideAlerter(wrapperRef,onEnd);
-  const onLongPressStop = (e) => {
-    console.log("i am kdos")
-    if((e.button === 0 && onEnd)||(e.type === "touchend" && onStart)){
+    }else{
       onEnd()
-     }
-  };
+    }
+  },[isOn])
   return (
     <>
       <div className={classes.main}>
         <button
           ref={wrapperRef}
-          onMouseDown={onLongPressStart}
-          onMouseUp={onLongPressStop}
-          onTouchStart={onLongPressStart}
-          onTouchEnd={onLongPressStop}
-          onKeyDown = {onLongPressStop}
-          onContextMenu={onLongPressStop}
-          className={classes.rbMic}
+          // onMouseDown={onLongPressStart}
+          // onMouseUp={onLongPressStop}
+          // onTouchStart={onLongPressStart}
+          // onTouchEnd={onLongPressStop}
+          // onKeyDown = {onLongPressStop}
+          // onContextMenu={onLongPressStop}
+          onClick={handleChange}
+          className={clsx(classes.rbMic,recordingStatus && classes.rbMicActive)}
         >
           <MicNoneIcon />
         </button>

@@ -17,7 +17,7 @@ const Congrats = ({ selectedTitle }) => {
           <a href="">http://dallas.dev/story/31341124</a>
         </div>
         <div className={classes.readNow}>
-          <NavLink style={{ textDecoration: "none" }} to="">
+          <NavLink style={{ textDecoration: "none" }} to="/">
             <button className={classes.readButton}>Read Story Now</button>
           </NavLink>
         </div>

@@ -41,7 +41,7 @@
     transition: all 0.2s ease;
     border-radius: 50%;
   }
-  .rbMic:active {
+  .rbMicActive{
     background: #B40F0F;
   }
   .recordText{

@@ -19,7 +19,7 @@ const style = {
   borderRadius:'30px'
 };
 
-export default function ExitDialog({dialogStatus, setDialogStatus,onExit}) {
+export default function ExitDialog({dialogStatus, setDialogStatus,onExit,message}) {
   
   const handleClose = () => setDialogStatus(false);
 
@@ -34,7 +34,7 @@ export default function ExitDialog({dialogStatus, setDialogStatus,onExit}) {
       >
         <Box sx={style}>
           <p id="modal-modal-description" className={classes.text} >
-          Are you sure you want to exit this story?
+          {message}
           </p>
           <div className={classes.buttonFlex}>
             <div className={classes.dontExit}>
