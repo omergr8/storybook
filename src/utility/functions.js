@@ -71,7 +71,7 @@ export function generateUUID() {
     const sentenceArray = story;
     let beforeText = [];
     let afterText = [];
-    let highlight = story[0].value;
+     let highlight = story[0].value;
     const usingSplit = text.split(" ").filter((item) => item);
     if (time) {
       sentenceArray.forEach((element, i) => {
@@ -79,6 +79,8 @@ export function generateUUID() {
           beforeText.push(usingSplit[i]);
         } else if (element.time > time) {
           afterText.push(usingSplit[i]);
+        }else if (element.time === time) {
+          highlight = usingSplit[i];
         }
       });
     } else {
@@ -87,61 +89,62 @@ export function generateUUID() {
     }
     let cleanAfterText = afterText.filter((item) => item);
     let cleanBeforeText = beforeText.filter((item) => item);
+    console.log("before is",cleanBeforeText.join(" "),'after',cleanAfterText.join(" "),'hl',highlight)
     var format = formatRegex;
-    if (
-      cleanAfterText[0] &&
-      cleanAfterText[0]?.replace(cleanWordRegex, "") ===
-        word.replace(cleanWordRegex, "")
-    ) {
-      const special = format.exec(cleanAfterText[0]);
-      if (special) {
-        highlight = special["input"];
-      } else {
-        highlight = word;
-      }
-    } else if (word) {
-      if (
-        cleanBeforeText[cleanBeforeText.length - 1]?.replace(
-          cleanWordRegex,
-          ""
-        ) !== word.replace(cleanWordRegex, "")
-      ) {
-        highlight = word;
-      } else {
-        highlight = cleanBeforeText[cleanBeforeText.length - 1];
-      }
-    }
-    if (
-      cleanBeforeText[cleanBeforeText.length - 1]?.replace(cleanWordRegex, "") ===
-      word.replace(cleanWordRegex, "")
-    ) {
-      const special = format.exec(cleanBeforeText[cleanBeforeText.length - 1]);
-      if (special) {
-        highlight = special["input"];
-      } else {
-        highlight = word;
-      }
-    } else if (word) {
-      if (cleanAfterText[0]) {
-        highlight = cleanAfterText[0];
-      } else {
-        highlight = word;
-      }
-    }
-    if (
-      cleanAfterText[0]?.replace(cleanWordRegex, "") ===
-        word.replace(cleanWordRegex, "") ||
-      cleanAfterText[0] === word + "."
-    ) {
-      cleanAfterText.splice(0, 1);
-    }
-    if (
-      cleanBeforeText[cleanBeforeText.length - 1]?.replace(cleanWordRegex, "") ===
-        word.replace(cleanWordRegex, "") ||
-      cleanBeforeText[cleanBeforeText.length - 1] === word + "."
-    ) {
-      cleanBeforeText.splice(cleanBeforeText.length - 1, 1);
-    }
+    // if (
+    //   cleanAfterText[0] &&
+    //   cleanAfterText[0]?.replace(cleanWordRegex, "") ===
+    //     word.replace(cleanWordRegex, "")
+    // ) {
+    //   const special = format.exec(cleanAfterText[0]);
+    //   if (special) {
+    //     highlight = special["input"];
+    //   } else {
+    //     highlight = word;
+    //   }
+    // } else if (word) {
+    //   if (
+    //     cleanBeforeText[cleanBeforeText.length - 1]?.replace(
+    //       cleanWordRegex,
+    //       ""
+    //     ) !== word.replace(cleanWordRegex, "")
+    //   ) {
+    //     highlight = word;
+    //   } else {
+    //     highlight = cleanBeforeText[cleanBeforeText.length - 1];
+    //   }
+    // }
+    // if (
+    //   cleanBeforeText[cleanBeforeText.length - 1]?.replace(cleanWordRegex, "") ===
+    //   word.replace(cleanWordRegex, "")
+    // ) {
+    //   const special = format.exec(cleanBeforeText[cleanBeforeText.length - 1]);
+    //   if (special) {
+    //     highlight = special["input"];
+    //   } else {
+    //     highlight = word;
+    //   }
+    // } else if (word) {
+    //   if (cleanAfterText[0]) {
+    //     highlight = cleanAfterText[0];
+    //   } else {
+    //     highlight = word;
+    //   }
+    // }
+    // if (
+    //   cleanAfterText[0]?.replace(cleanWordRegex, "") ===
+    //     word.replace(cleanWordRegex, "") ||
+    //   cleanAfterText[0] === word + "."
+    // ) {
+    //   cleanAfterText.splice(0, 1);
+    // }
+    // if (
+    //   cleanBeforeText[cleanBeforeText.length - 1]?.replace(cleanWordRegex, "") ===
+    //     word.replace(cleanWordRegex, "") ||
+    //   cleanBeforeText[cleanBeforeText.length - 1] === word + "."
+    // ) {
+    //   cleanBeforeText.splice(cleanBeforeText.length - 1, 1);
+    // }
     cleanBeforeText.push("");
     cleanAfterText.unshift("");
     return {

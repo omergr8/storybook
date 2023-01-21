@@ -1,5 +1,5 @@
 import classes from "./Read.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -16,6 +16,7 @@ import LoaderBackdrop from "../Common/Backdrop/LoaderBackdrop";
 import ExitDialog from "../Common/ExitDialog/ExitDialog";
 const Read = ({}) => {
   const params = useParams();
+  const id = React.useRef([]);
   const navigate = useNavigate();
   const [dialogStatus, setDialogStatus] = React.useState(false);
   const [page, setPage] = useState(0);
@@ -35,6 +36,7 @@ const Read = ({}) => {
   //for custom timer
   const [running, setRunning] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const [hl, setHl] = useState("");
 
   useEffect(() => {
     setLoading((prevState) => {
@@ -54,18 +56,6 @@ const Read = ({}) => {
     });
   }, []);
 
-  //Time Interval for Audio
-  useEffect(() => {
-    let interval;
-    if (running) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 99.6);
-      }, 100);
-    } else if (!running) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [running]);
 
   // UseEffect hook to set change selected sentence audio when index of story changes ( next sentence/Previous Sentence )
   useEffect(() => {
@@ -81,6 +71,11 @@ const Read = ({}) => {
       timeStampCurrent: 0,
     });
   };
+  const clearSetTimeout = () => {
+    for (let i = 0; i < storyData?.story[page - 1]?.speechParams.length; i++) {
+      clearTimeout(id.current[i]);
+    }
+  };
 
   const handleNext = () => {
     if (page < storyData?.story.length) {
@@ -90,10 +85,8 @@ const Read = ({}) => {
       setRunning(false);
       setIsPlay("play");
       resetSection();
-      //play
-      //   setTimeout(()=>{
-      //     onClickPlay(1)
-      //   },2000)
+      setHl('')
+      clearSetTimeout()
     }
   };
   const handleBack = (p) => {
@@ -104,8 +97,33 @@ const Read = ({}) => {
       setRunning(false);
       setIsPlay("play");
     }
+    setHl('')
+    clearSetTimeout()
     resetSection();
   };
+
+  const detectWord = () =>{
+    const set = storyData?.story[page - 1]?.speechParams
+
+    set.forEach((element,i) => {
+      id.current[i] = setTimeout(() => {
+        setHl(element.value)
+        if (
+          storyData &&
+          audioFile &&
+          Object.keys(storyData).length !== 0 &&
+          page !== 0
+        ) {
+          const speechMark = getSpeechMarkAtTime(
+            storyData?.story[page - 1]?.speechParams,
+            element.time
+          );
+          onTimeUpdate(speechMark, element.time);
+        }
+       
+      }, element.time);
+    });
+  }
   const onClickPlay = (p) => {
     if (page >= 0 || p >= 0) {
       //console.log("i am play 2",audioFile,)
@@ -113,6 +131,7 @@ const Read = ({}) => {
       audioFile.onplaying = () => {
         setRunning(true);
         setIsPlay("pause");
+        detectWord()
       };
     }
   };
@@ -120,7 +139,7 @@ const Read = ({}) => {
     setRunning(false);
     audioFile.pause();
   };
-  const onTimeUpdate = (speechMark, currentTime, type) => {
+  const onTimeUpdate = (speechMark, currentTime) => {
     setHighlightSection({
       from: speechMark.start,
       to: speechMark.end,
@@ -130,20 +149,6 @@ const Read = ({}) => {
     });
   };
 
-  useEffect(() => {
-    if (
-      storyData &&
-      audioFile &&
-      Object.keys(storyData).length !== 0 &&
-      page !== 0
-    ) {
-      const speechMark = getSpeechMarkAtTime(
-        storyData?.story[page - 1]?.speechParams,
-        seconds
-      );
-      onTimeUpdate(speechMark, seconds, "es");
-    }
-  }, [seconds]);
 
   // To detect when audio file ended
   useEffect(() => {
@@ -152,6 +157,7 @@ const Read = ({}) => {
         setIsPlay("play");
         setRunning(false);
         setSeconds(0);
+        setHl(storyData?.story[page - 1]?.speechParams[0].value)
       };
       if (isAutoPlay && page !== 0) {
         onClickPlay();
@@ -227,6 +233,7 @@ const Read = ({}) => {
                     story={storyData?.story}
                     selectedIndex={page - 1}
                     highlightSection={highlightSection}
+                    word={hl}
                     running={running}
                   />
                 )}

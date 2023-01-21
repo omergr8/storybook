@@ -3,28 +3,42 @@ import clsx from "clsx";
 import { defaultBG } from "../../../Constants/sets";
 import React, { useState, useEffect } from "react";
 import { textModifier } from "../../../../utility/functions";
-const HighlightedText = ({ text, story, word, timeStampCurrent,running }) => {
-    const mod = textModifier(story, timeStampCurrent, word, text);
-    if(running){
-      return (
-        <p className={classes.englishSentence}>
-          {mod.before}
-          <span style={{ color: "#F663E8" }}>{mod.highlight}</span>
-          {mod.after}
-        </p>
-      );
-    }else{
-      return (
-        <p className={classes.englishSentence}>
-          {mod.highlight} {mod.before}
-          {/* <span style={{ color: "#F663E8" }}>{mod.highlight}</span> */}
-          {mod.after}
-        </p>
-      );
-    }
-   
-  };
-const StoryRead = ({ data,  highlightSection,running }) => {
+
+
+const HighlightedText = ({
+  text,
+  story,
+  newWord,
+  word,
+  timeStampCurrent,
+  running,
+}) => {
+  
+  const mod = textModifier(story, timeStampCurrent, newWord, text);
+  // console.log("hello", word,timeStampCurrent,mod);
+  if (running) {
+    return (
+      <p className={classes.englishSentence}>
+        {mod.before}
+        <span style={{ color: "#F663E8" }}>{mod.highlight}</span>
+        {mod.after}
+      </p>
+    );
+  } else {
+    return (
+      <p className={classes.englishSentence}>
+        {
+          mod.before.length === 0 ? mod.highlight +  mod.before+
+          mod.after :  mod.before+
+          mod.after + mod.highlight }
+        
+      </p>
+    );
+  }
+};
+
+
+const StoryRead = ({ data, highlightSection, running, word }) => {
   return (
     <>
       <div className={classes.main}>
@@ -37,23 +51,26 @@ const StoryRead = ({ data,  highlightSection,running }) => {
           <div
             className={clsx(
               classes.title,
-              (data.backgroundCover || (!data.backgroundCover && !data.backgroundImage) ) && classes.back,
+              (data.backgroundCover ||
+                (!data.backgroundCover && !data.backgroundImage)) &&
+                classes.back
             )}
             style={{
               backgroundImage: data.backgroundCover
                 ? `url(${data.backgroundCover})`
-                : (!data.backgroundCover && !data.backgroundImage) ? `url(${defaultBG})` : '' ,
+                : !data.backgroundCover && !data.backgroundImage
+                ? `url(${defaultBG})`
+                : "",
             }}
           >
-            {/* <p>{data.value}</p> */}
             <div className="container-80">
-                   <HighlightedText
+              <HighlightedText
             text={data?.value}
+            newWord={word}
             story={data?.speechParams}
             running={running}
             {...highlightSection} />
             </div>
-       
           </div>
         </div>
       </div>
