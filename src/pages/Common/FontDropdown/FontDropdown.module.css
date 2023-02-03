@@ -1,0 +1,74 @@
+.main {
+    position: relative;
+}
+.chip {
+  width: 145px;
+  height: 30px;
+  background: #d9d9d9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+.chip p {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+.dropModel {
+    position: absolute;
+  width: 147px;
+  height: 154px;
+  left: 0%;
+  top: 115%;
+  background: #d9d9d9;
+  opacity: 0.8;
+  border: 1px solid #aaaaaa;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inputBox {
+margin-bottom: 30px;
+}
+.input {
+    background: #ffffff;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    width: 80px;
+height: 35px;
+    /* identical to box height */
+    color: #000000;
+}
+.buttonDiv {
+}
+.button {
+    border: unset;
+    background: unset;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    /* identical to box height */
+    color: #000000;
+    cursor: pointer;
+}
+.button:active{
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}

@@ -112,6 +112,7 @@ export const textToSpeechEn = async (
             value: el.value.replace(/(\r\n|\n|\r)/gm, ""),
             audio: tt3.Location,
             speechParams: objArray,
+            fontSize:el.fontSize ? el.fontSize : null
           },
         ];
         setRecordingArray((prevVals) => [
@@ -217,7 +218,8 @@ export const addStory = async (
   title,
   setActiveStep,
   setLoading,
-  setErrorData
+  setErrorData,
+  handlePage
 ) => {
   setLoading((prevState) => {
     return { ...prevState, message: "saving to db" };
@@ -236,7 +238,8 @@ export const addStory = async (
         };
       });
     } else {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setActiveStep && setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      handlePage && handlePage()
     }
     setLoading((prevState) => {
       return { ...prevState, status: false, message: "" };
@@ -267,6 +270,6 @@ export const getSpecificStory = async (id) => {
   const { data, error } = await supabase
   .from('stories')
   .select().eq('id', id) 
-  console.log("in req",data,id)
+  //console.log("in req",data,id)
   return { data: data, error:error}
 }

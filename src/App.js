@@ -10,6 +10,7 @@ import ControlButton from "./pages/Common/ControlButton/ControlButton";
 import Wizard from "./pages/Wizard/Wizard";
 import Home from "./pages/Home/Home";
 import Read from "./pages/Read/Read";
+import CreateStory from "./pages/CreateStory/CreateStory";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/read/:id",
     element: <Read />,
+  },
+  {
+    path: "/create",
+    element: <CreateStory />,
   },
 ]);
 

@@ -1,0 +1,46 @@
+.main{
+
+}
+
+
+.storyTitle{
+
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item1 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .item3{
+    margin-right: 30px;
+  }
+.titleArea{
+    margin-top: 20px;
+}
+.titleStoryArea{
+    resize: none;
+    /* border: 0 none; */
+    width: 100%;
+    /* outline: none; */
+    font-family: "Avenir";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: black;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    /* height: 40vh; */
+    /* overflow: scroll; */
+    height: 13vh;
+    padding: 20px;
+}

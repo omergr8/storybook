@@ -60,7 +60,7 @@ const StoryRead = ({ data, highlightSection, running, word }) => {
                 ? `url(${data.backgroundCover})`
                 : !data.backgroundCover && !data.backgroundImage
                 ? `url(${defaultBG})`
-                : "",
+                : "",fontSize:data.fontSize ? data.fontSize+'px' : '40px',lineHeight:data.fontSize ? data.fontSize+'px' : '50px'
             }}
           >
             <div className="container-80">

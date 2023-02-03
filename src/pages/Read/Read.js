@@ -17,6 +17,7 @@ import ExitDialog from "../Common/ExitDialog/ExitDialog";
 const Read = ({}) => {
   const params = useParams();
   const id = React.useRef([]);
+  let audioRef = useRef();
   const navigate = useNavigate();
   const [dialogStatus, setDialogStatus] = React.useState(false);
   const [page, setPage] = useState(0);
@@ -60,6 +61,7 @@ const Read = ({}) => {
   // UseEffect hook to set change selected sentence audio when index of story changes ( next sentence/Previous Sentence )
   useEffect(() => {
     setAudioFile(new Audio(storyData?.story[page - 1]?.audio));
+    audioRef.current =new Audio(storyData?.story[page - 1]?.audio)
   }, [page]);
 
   const resetSection = () => {
@@ -127,8 +129,8 @@ const Read = ({}) => {
   const onClickPlay = (p) => {
     if (page >= 0 || p >= 0) {
       //console.log("i am play 2",audioFile,)
-      audioFile.play();
-      audioFile.onplaying = () => {
+      audioRef.current.play();
+      audioRef.current.onplaying = () => {
         setRunning(true);
         setIsPlay("pause");
         detectWord()
@@ -136,8 +138,9 @@ const Read = ({}) => {
     }
   };
   const onClickPause = () => {
+    console.log("i pause",audioFile)
     setRunning(false);
-    audioFile.pause();
+    audioRef.current.pause();
   };
   const onTimeUpdate = (speechMark, currentTime) => {
     setHighlightSection({
@@ -170,8 +173,17 @@ const Read = ({}) => {
   };
 
   const onExit = () => {
+    onClickPause();
+    resetSection()
     navigate(`/`);
   };
+  useEffect(()=>{
+    return () => {
+      audioRef.current.pause()
+      resetSection()
+      setRunning(false)
+    };
+  },[])
   return (
     <>
       <ExitDialog
