@@ -1,7 +1,8 @@
 import classes from "./StoryArea.module.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SyncIcon from "@mui/icons-material/Sync";
 import FontDropdown from "../../../Common/FontDropdown/FontDropdown";
+
 const StoryArea = ({
   storyText,
   setStoryText,
@@ -9,9 +10,11 @@ const StoryArea = ({
   setFontSize,
   onRefresh,
 }) => {
+
   const handleChange = (e) => {
     setStoryText(e.target.value);
   };
+  
   return (
     <>
       <div className={classes.main}>

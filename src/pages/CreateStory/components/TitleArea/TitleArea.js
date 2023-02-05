@@ -1,6 +1,5 @@
 import classes from "./TitleArea.module.css";
-import React, { useState, useEffect } from "react";
-import SyncIcon from "@mui/icons-material/Sync";
+import React  from "react";
 import FontDropdown from "../../../Common/FontDropdown/FontDropdown";
 
 const TitleArea = ({ titleText, setTitleText, titleFontSize, setTitleFontSize }) => {

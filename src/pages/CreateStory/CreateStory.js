@@ -1,5 +1,5 @@
 import classes from "./CreateStory.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Toast from "../Common/Toast/Toast";
 import StoryArea from "./components/StoryArea/StoryArea";
 import TitleArea from "./components/TitleArea/TitleArea";
@@ -8,6 +8,7 @@ import LoaderBackdrop from "../Common/Backdrop/LoaderBackdrop";
 import { useNavigate } from "react-router-dom";
 import { storyParser, titleParser, } from "../../utility/functions";
 import { textToSpeechEn,addStory } from "../../utility/request";
+
 const CreateStory = ({}) => {
     const navigate = useNavigate();
   const [storyText, setStoryText] = useState("");
@@ -23,6 +24,7 @@ const CreateStory = ({}) => {
     message: "",
     severity: "error",
   });
+
   const onRefresh = () => {
     if(storyText === "" && titleText !== "" ){
         setErrorData({
@@ -59,6 +61,7 @@ const CreateStory = ({}) => {
   const handlePage = () =>{
     navigate(`/`);
   }
+
   const handleSubmit = async () =>{
     //console.log('story is',storySet)
    if(storySet && titleObj){
@@ -86,6 +89,7 @@ const CreateStory = ({}) => {
    }
       
   }
+  
   return (
     <>
     <Toast errorData={errorData} setErrorData={setErrorData} />

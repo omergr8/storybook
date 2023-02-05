@@ -1,9 +1,9 @@
 import classes from "./NotHappy.module.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SelectBox from "../../../Common/SelectBox/SelectBox";
 
 const NotHappy = ({isActive,notHappy,setNotHappy}) => {
-  console.log("test", isActive);
+
   const onNotHappySelect = (el)=>{
     setNotHappy(el)
 }

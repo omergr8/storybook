@@ -1,15 +1,16 @@
 import classes from "./Title.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SelectBox from "../../../Common/SelectBox/SelectBox";
 import ImageModeTab from "../../../Common/ImageModeTab/ImageModeTab";
 import { saveImages } from "../../../../utility/request";
+
 const Title = ({
-  isActive,
   titles,
   setTitles,
   selectedTitle,
   setSelectedTitle,
 }) => {
+  
   const [selectedBox, setSelectedBox] = useState("");
   const onTitleSelect = (el) => {
     setSelectedTitle(el);
@@ -24,7 +25,6 @@ const Title = ({
       type: "custom",
     };
     const copySet = [...titles];
-   // console.log("i am ic bef",  copySet);
     copySet[copySet.length - 1].type === "title" && (copySet[titles.length] = customObj);
     const customIndex = titles.findIndex(el=>el.type==='custom')
     customObj.backgroundCover = titles[titles.length - 1].backgroundCover 
@@ -35,13 +35,12 @@ const Title = ({
       customObj.backgroundImage = titles[titles.length - 1].backgroundImage 
       customObj.mode = titles[titles.length - 1].mode 
       copySet[customIndex] =  customObj
-      // console.log("i am ic",copySet)
        setTitles(copySet);
     }
     setSelectedTitle(customObj);
   };
+
   const onBackgroundChange = async (id, mode, background) => {
-    //console.log("i am change ", id, mode, background, "test", titles);
     const copySet = [...titles];
     let temporaryarray = titles.slice();
     const objIndex = copySet.findIndex((obj) => obj.id == id);

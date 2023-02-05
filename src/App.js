@@ -1,12 +1,6 @@
 import AWS from "aws-sdk";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { sampleData } from "./pages/Constants/sets";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import CreateButton from "./pages/Common/CreateButton/CreateButton";
-import ShowcaseCard from "./pages/Common/ShowcaseCard/ShowcaseCard";
-import RecordButton from "./pages/Common/RecordButton/RecordButton";
-import ControlButton from "./pages/Common/ControlButton/ControlButton";
 import Wizard from "./pages/Wizard/Wizard";
 import Home from "./pages/Home/Home";
 import Read from "./pages/Read/Read";

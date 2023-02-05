@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Toast from "../Common/Toast/Toast";
-import { sampleData } from "../Constants/sets";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import CreateStory from "./Sections/CreateStory/CreateStory";
 import EnglishLevel from "./Sections/EnglishLevel/EnglishLevel";
 import StoryWords from "./Sections/StoryWords/StoryWords";
@@ -18,32 +17,20 @@ import RecordButton from "../Common/RecordButton/RecordButton";
 import ControlButton from "../Common/ControlButton/ControlButton";
 import LoaderBackdrop from "../Common/Backdrop/LoaderBackdrop";
 import ExitDialog from "../Common/ExitDialog/ExitDialog";
-import {
-  getStory,
-  saveImages,
-  textToSpeechEn,
-  addStory,
-} from "../../utility/request";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
-
-const storyPromptCreator = (textValue, englishGrade, storyWords) => {
-  return `Tell me a story in ${storyWords} or less that is interesting and creative. Story should use ${englishGrade} language. The story begins like this, “${textValue}” At the end of the story add three lines space and use the tag "Title:" and then give me 3 sample titles in numbered list for this story.`;
-};
+import { storyPromptCreator,transToUppercase } from "../../utility/functions";
+import { getStory, textToSpeechEn, addStory } from "../../utility/request";
+import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 const Wizard = () => {
+
+  // Using react=speech-recognition
   const {
     transcript,
-    listening,
     resetTranscript,
-    browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
+  
   const navigate = useNavigate();
-  const [isMissing, setIsMissing] = useState({
-    condition: false,
-    error: "",
-  });
+
   const [dialogStatus, setDialogStatus] = React.useState(false);
   const [recordingStatus, setRecordingStatus] = useState(false);
   const [textValue, setTextValue] = useState("");
@@ -68,12 +55,7 @@ const Wizard = () => {
     severity: "error",
   });
 
-  //   useEffect(() => {
-  //     const sentence = sentenceArray.join(" ");
-  //     // console.log("join text a",sentence)
-  //     setTextValue(sentence);
-  //     console.log("tv is", sentence);
-  //   }, [sentenceArray]);
+
 
   useEffect(() => {
     if (activeStep === 0) {
@@ -107,9 +89,7 @@ const Wizard = () => {
     notHappy,
     selectedTitle,
   ]);
-  const transToUppercase = (t) => {
-    return t.charAt(0).toUpperCase() + t.slice(1);
-  };
+ 
   const handleNext = () => {
     if (activeStep === 4 && isHappy === "Yes" && !isActive) {
       setActiveStep((prevActiveStep) => prevActiveStep + 2);
@@ -131,55 +111,56 @@ const Wizard = () => {
     }
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
 
-  const appendSentence = (val,cond) => {
-    if(cond === true){
+  const appendSentence = (val, cond) => {
+    if (cond === true) {
       const sentence = [...sentenceArray, val].join(" ");
-      //console.log("test join",val,'lk',sentence,'wow',sentence+val)
       setTextValue(sentence);
-    }else if(cond === 'type'){
+    } else if (cond === "type") {
       setSentenceArray([val]);
       setTextValue(val);
-    }
-    else if(cond === false){
+    } else if (cond === false) {
       setSentenceArray((prevVals) => [...prevVals, val]);
       const sentence = [...sentenceArray, val].join(" ");
       setTextValue(sentence);
     }
-
   };
 
   const onStart = () => {
     setRecordingStatus(true);
-    SpeechRecognition.startListening({continuous:true});
+    SpeechRecognition.startListening({ continuous: true });
   };
 
   const onEnd = () => {
-    resetTranscript()
+    resetTranscript();
     setRecordingStatus(false);
-    SpeechRecognition.stopListening()
+    SpeechRecognition.stopListening();
     if (transcript !== "") {
-      appendSentence(transToUppercase(transcript) + ".",false);
+      appendSentence(transToUppercase(transcript) + ".", false);
     }
   };
-  useEffect(()=>{
-    if(recordingStatus && transcript && transcript !== ""){
-      appendSentence(transToUppercase(transcript) ,true);
-    }else if(!recordingStatus){
-      resetTranscript()
+  useEffect(() => {
+    if (recordingStatus && transcript && transcript !== "") {
+      appendSentence(transToUppercase(transcript), true);
+    } else if (!recordingStatus) {
+      resetTranscript();
       SpeechRecognition.startListening();
       SpeechRecognition.stopListening();
     }
-  },[transcript])
+  }, [transcript]);
 
   const steps = [
     {
       label: "Record 1",
       description: (
-        <CreateStory appendSentence={appendSentence} textValue={textValue} setTextValue={setTextValue} />
+        <CreateStory
+          appendSentence={appendSentence}
+          textValue={textValue}
+          setTextValue={setTextValue}
+        />
       ),
     },
     {
@@ -263,14 +244,9 @@ const Wizard = () => {
       setErrorData,
       setActiveStep
     );
-    console.log("i am saving", storyTitles, recordingArray, "lk", data);
+    //console.log("i am saving", storyTitles, recordingArray, "lk", data);
     addStory(data, selectedTitle, setActiveStep, setLoading, setErrorData);
 
-    // storySet.forEach((el,i)=>{
-    //     if(el.backgroundImage !== ""){
-
-    //     }
-    // })
   };
   const getOpenAiStory = (step) => {
     setLoading((prevState) => {
@@ -290,7 +266,7 @@ const Wizard = () => {
       setErrorData,
       step
     );
-    console.log("story data is", textValue, englishGrade, storyWords, prompt);
+    //console.log("story data is", textValue, englishGrade, storyWords, prompt);
   };
 
   const onExit = () => {
@@ -318,11 +294,7 @@ const Wizard = () => {
             <Box sx={{ flexGrow: 1 }}>
               <Box
                 sx={{
-                  //   height: "100vh",
-                  //   background:"#313A6A;",
-
                   width: "100%",
-                  // pt:0
                 }}
               >
                 <div className="container-50">
@@ -347,12 +319,6 @@ const Wizard = () => {
                         />
                       </div>
                     )}
-                    {/* <ControlButton
-                      text="prev"
-                      icon={<NavigateNextIcon sx={{ fontSize: "45px" }} />}
-                      isActive={false}
-                      onNext={handleBack}
-                    /> */}
                   </div>
                 </div>
               </Box>

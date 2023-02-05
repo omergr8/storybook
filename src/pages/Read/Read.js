@@ -1,5 +1,5 @@
 import classes from "./Read.module.css";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -9,11 +9,11 @@ import StoryRead from "./Sections/StoryRead/StoryRead";
 import ControlButton from "../Common/ControlButton/ControlButton";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { sampleObj } from "../Constants/sets";
 import { getSpeechMarkAtTime } from "../../utility/functions";
 import { getSpecificStory } from "../../utility/request";
 import LoaderBackdrop from "../Common/Backdrop/LoaderBackdrop";
 import ExitDialog from "../Common/ExitDialog/ExitDialog";
+
 const Read = ({}) => {
   const params = useParams();
   const id = React.useRef([]);
@@ -32,11 +32,9 @@ const Read = ({}) => {
     timeStamp: 0,
     timeStampCurrent: 0,
   });
-  const [isPlay, setIsPlay] = useState("play");
   const [audioFile, setAudioFile] = useState(new Audio());
   //for custom timer
   const [running, setRunning] = useState(false);
-  const [seconds, setSeconds] = useState(0);
   const [hl, setHl] = useState("");
 
   useEffect(() => {
@@ -57,11 +55,10 @@ const Read = ({}) => {
     });
   }, []);
 
-
   // UseEffect hook to set change selected sentence audio when index of story changes ( next sentence/Previous Sentence )
   useEffect(() => {
     setAudioFile(new Audio(storyData?.story[page - 1]?.audio));
-    audioRef.current =new Audio(storyData?.story[page - 1]?.audio)
+    audioRef.current = new Audio(storyData?.story[page - 1]?.audio);
   }, [page]);
 
   const resetSection = () => {
@@ -83,33 +80,29 @@ const Read = ({}) => {
     if (page < storyData?.story.length) {
       setPage((prevActiveStep) => prevActiveStep + 1);
       onClickPause();
-      setSeconds(0);
       setRunning(false);
-      setIsPlay("play");
       resetSection();
-      setHl('')
-      clearSetTimeout()
+      setHl("");
+      clearSetTimeout();
     }
   };
   const handleBack = (p) => {
     if (page >= 0) {
       setPage((prevActiveStep) => prevActiveStep - 1);
       onClickPause();
-      setSeconds(0);
       setRunning(false);
-      setIsPlay("play");
     }
-    setHl('')
-    clearSetTimeout()
+    setHl("");
+    clearSetTimeout();
     resetSection();
   };
 
-  const detectWord = () =>{
-    const set = storyData?.story[page - 1]?.speechParams
-
-    set.forEach((element,i) => {
+  const detectWord = () => {
+    const set = storyData?.story[page - 1]?.speechParams;
+    // console.log("set is",set)
+    set.forEach((element, i) => {
       id.current[i] = setTimeout(() => {
-        setHl(element.value)
+        setHl(element.value);
         if (
           storyData &&
           audioFile &&
@@ -122,23 +115,21 @@ const Read = ({}) => {
           );
           onTimeUpdate(speechMark, element.time);
         }
-       
       }, element.time);
     });
-  }
+  };
   const onClickPlay = (p) => {
     if (page >= 0 || p >= 0) {
       //console.log("i am play 2",audioFile,)
       audioRef.current.play();
       audioRef.current.onplaying = () => {
         setRunning(true);
-        setIsPlay("pause");
-        detectWord()
+        detectWord();
       };
     }
   };
   const onClickPause = () => {
-    console.log("i pause",audioFile)
+    console.log("i pause", audioFile);
     setRunning(false);
     audioRef.current.pause();
   };
@@ -152,15 +143,12 @@ const Read = ({}) => {
     });
   };
 
-
   // To detect when audio file ended
   useEffect(() => {
     if (audioFile) {
       audioFile.onended = () => {
-        setIsPlay("play");
         setRunning(false);
-        setSeconds(0);
-        setHl(storyData?.story[page - 1]?.speechParams[0].value)
+        setHl(storyData?.story[page - 1]?.speechParams[0].value);
       };
       if (isAutoPlay && page !== 0) {
         onClickPlay();
@@ -174,16 +162,16 @@ const Read = ({}) => {
 
   const onExit = () => {
     onClickPause();
-    resetSection()
+    resetSection();
     navigate(`/`);
   };
-  useEffect(()=>{
+  useEffect(() => {
     return () => {
-      audioRef.current.pause()
-      resetSection()
-      setRunning(false)
+      audioRef.current.pause();
+      resetSection();
+      setRunning(false);
     };
-  },[])
+  }, []);
   return (
     <>
       <ExitDialog

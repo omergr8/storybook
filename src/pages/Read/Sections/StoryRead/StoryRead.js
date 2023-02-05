@@ -1,7 +1,7 @@
 import classes from "./StoryRead.module.css";
 import clsx from "clsx";
 import { defaultBG } from "../../../Constants/sets";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { textModifier } from "../../../../utility/functions";
 
 
@@ -9,13 +9,12 @@ const HighlightedText = ({
   text,
   story,
   newWord,
-  word,
   timeStampCurrent,
   running,
 }) => {
   
   const mod = textModifier(story, timeStampCurrent, newWord, text);
-  // console.log("hello", word,timeStampCurrent,mod);
+  console.log("hello",timeStampCurrent,mod,'lol',newWord,text);
   if (running) {
     return (
       <p className={classes.englishSentence}>

@@ -3,8 +3,10 @@ import { Buffer } from "buffer";
 import { storyFormatter, generateUUID } from "./functions";
 import { supabase } from "../config/supabaseClient";
 import AWS from "aws-sdk";
+
 var speechParams = {
   OutputFormat: "mp3",
+  Engine: "neural",
   SampleRate: "16000",
   Text: "",
   TextType: "text",
@@ -13,6 +15,7 @@ var speechParams = {
 };
 var speechParamsJson = {
   OutputFormat: "json",
+  Engine: "neural",
   SampleRate: "16000",
   Text: "",
   TextType: "text",
@@ -26,6 +29,7 @@ const params = {
   Key: ``,
   Body: {},
 };
+
 const performTextEnglish = (x, setErrorData) => {
   var polly = new AWS.Polly({ apiVersion: "2016-06-10" });
   speechParams.Text = x;
@@ -48,6 +52,7 @@ const performTextEnglish = (x, setErrorData) => {
       });
     });
 };
+
 const performTextEnglishJson = (x, setErrorData) => {
   var polly = new AWS.Polly({ apiVersion: "2016-06-10" });
   speechParamsJson.Text = x;
@@ -112,7 +117,7 @@ export const textToSpeechEn = async (
             value: el.value.replace(/(\r\n|\n|\r)/gm, ""),
             audio: tt3.Location,
             speechParams: objArray,
-            fontSize:el.fontSize ? el.fontSize : null
+            fontSize: el.fontSize ? el.fontSize : null,
           },
         ];
         setRecordingArray((prevVals) => [
@@ -213,6 +218,7 @@ export const getStory = async (
     });
   }
 };
+
 export const addStory = async (
   story,
   title,
@@ -239,7 +245,7 @@ export const addStory = async (
       });
     } else {
       setActiveStep && setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      handlePage && handlePage()
+      handlePage && handlePage();
     }
     setLoading((prevState) => {
       return { ...prevState, status: false, message: "" };
@@ -261,15 +267,14 @@ export const addStory = async (
 
 export const getStoriesList = async () => {
   const { data, error } = await supabase
-  .from('stories')
-  .select()
-  .order('id', { ascending: false })
-  return { data: data, error:error}
-}
+    .from("stories")
+    .select()
+    .order("id", { ascending: false });
+  return { data: data, error: error };
+};
+
 export const getSpecificStory = async (id) => {
-  const { data, error } = await supabase
-  .from('stories')
-  .select().eq('id', id) 
+  const { data, error } = await supabase.from("stories").select().eq("id", id);
   //console.log("in req",data,id)
-  return { data: data, error:error}
-}
+  return { data: data, error: error };
+};

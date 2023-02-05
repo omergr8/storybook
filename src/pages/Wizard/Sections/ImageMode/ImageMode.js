@@ -1,12 +1,10 @@
 import classes from "./ImageMode.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SelectBox from "../../../Common/SelectBox/SelectBox";
 import ControlButton from "../../../Common/ControlButton/ControlButton";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import ImageModeTab from "../../../Common/ImageModeTab/ImageModeTab";
-import LoaderBackdrop from "../../../Common/Backdrop/LoaderBackdrop";
 import { saveImages } from "../../../../utility/request";
-import clsx from "clsx";
 
 const ImageMode = ({
   isHappy,
