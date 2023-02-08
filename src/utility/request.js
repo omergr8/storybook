@@ -33,7 +33,7 @@ const params = {
 const performTextEnglish = (x, setErrorData) => {
   var polly = new AWS.Polly({ apiVersion: "2016-06-10" });
   speechParams.Text = x;
-  speechParams.VoiceId = "Salli";
+  speechParams.VoiceId = "Ruth";
   speechParams.LanguageCode = "en-US";
   return polly
     .synthesizeSpeech(speechParams)
@@ -56,7 +56,7 @@ const performTextEnglish = (x, setErrorData) => {
 const performTextEnglishJson = (x, setErrorData) => {
   var polly = new AWS.Polly({ apiVersion: "2016-06-10" });
   speechParamsJson.Text = x;
-  speechParamsJson.VoiceId = "Salli";
+  speechParamsJson.VoiceId = "Ruth";
   speechParamsJson.LanguageCode = "en-US";
   return polly
     .synthesizeSpeech(speechParamsJson)
